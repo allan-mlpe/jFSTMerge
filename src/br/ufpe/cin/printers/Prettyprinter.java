@@ -9,6 +9,7 @@ import br.ufpe.cin.files.FilesTuple;
 import br.ufpe.cin.generated.SimplePrintVisitor;
 import br.ufpe.cin.mergers.util.MergeContext;
 import br.ufpe.cin.mergers.util.MergeScenario;
+import br.ufpe.cin.parser.ExtensionType;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
@@ -24,14 +25,19 @@ public final class Prettyprinter {
 	 * @param tree
 	 * @return textual representation of the given tree, or empty string in case of given empty tree.
 	 */
-	public static String print(FSTNode tree){
+	public static String print(FSTNode tree, ExtensionType type){
 		//uncomment to print the AST
 		//System.out.println(tree.printFST(0));
 
 		String printable = "";
 		//de.ovgu.cide.fstgen.parsers.generated_java18_merge.SimplePrintVisitor printer = new de.ovgu.cide.fstgen.parsers.generated_java18_merge.SimplePrintVisitor();
 		SimplePrintVisitor printer = new SimplePrintVisitor();
-		FSTNode root = getCompilationUnit(tree);
+		FSTNode root = null;
+		if(type.equals(ExtensionType.JAVA)){
+			root = getCompilationUnit(tree);
+		} else {
+			root = getFileInput(tree);
+		}
 		if(root != null){
 			root.accept(printer);
 			printable = printer.getResult();
@@ -115,18 +121,43 @@ public final class Prettyprinter {
 	/**
 	 * Returns the first printable node of a AST, namely, the compilation unit.
 	 * @param tree
+	 * @param type 
 	 * @return node representing the compilation unit, or null in case there is no compilation unit
 	 */
 	private static FSTNonTerminal getCompilationUnit(FSTNode tree){
 		if(null != tree && tree instanceof FSTNonTerminal){
 			FSTNonTerminal node = (FSTNonTerminal)tree;
+			
 			if(node.getType().equals("CompilationUnit")){
 				return node;
 			} else {
-				return node.getChildren().isEmpty()? null : getCompilationUnit(node.getChildren().get(1));
+				return node.getChildren().isEmpty()? null : getCompilationUnit(node.getChildren().get(1));	
+				
 			}
 		} else {
 			return null;
 		}
 	}
+
+	/**
+	 * Returns the first printable node of a AST, namely, the compilation unit.
+	 * @param tree
+	 * @param type 
+	 * @return node representing the compilation unit, or null in case there is no compilation unit
+	 */	
+	private static FSTNode getFileInput(FSTNode tree) {
+		if(null != tree && tree instanceof FSTNonTerminal){
+			FSTNonTerminal node = (FSTNonTerminal)tree;
+			
+			if(node.getType().equals("file_input")){
+				return node;
+			} else {
+				return node.getChildren().isEmpty()? null : getFileInput(node.getChildren().get(1));	
+				
+			}
+		} else {
+			return null;
+		}
+	}
+	
 }

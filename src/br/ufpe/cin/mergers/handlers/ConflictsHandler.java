@@ -3,6 +3,7 @@ package br.ufpe.cin.mergers.handlers;
 import java.util.LinkedList;
 
 import br.ufpe.cin.mergers.util.MergeContext;
+import br.ufpe.cin.parser.ExtensionType;
 import br.ufpe.cin.printers.Prettyprinter;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -14,8 +15,8 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
  */
 final public class ConflictsHandler {
 
-	public static void handle(MergeContext context){
-		context.semistructuredOutput = Prettyprinter.print(context.superImposedTree); //partial result of semistructured merge is necessary for further processing
+	public static void handle(MergeContext context, ExtensionType type){
+		context.semistructuredOutput = Prettyprinter.print(context.superImposedTree, type); //partial result of semistructured merge is necessary for further processing
 		findAndDetectTypeAmbiguityErrors(context);
 		findAndDetectNewElementReferencingEditedOne(context);
 		findAndResolveRenamingOrDeletionConflicts(context);
