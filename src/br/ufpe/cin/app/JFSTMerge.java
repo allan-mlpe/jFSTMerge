@@ -210,10 +210,13 @@ public class JFSTMerge {
 
 	public static void main(String[] args) {
 		JFSTMerge merger = new JFSTMerge();
+		/*
 		File left = new File("D:\\dev\\repositorio\\ufpe\\jFSTMerge\\testfiles\\pythonexemple\\calculadora-left.py");
 		File base = new File("D:\\dev\\repositorio\\ufpe\\jFSTMerge\\testfiles\\pythonexemple\\calculadora-base.py");
 		File right = new File("D:\\dev\\repositorio\\ufpe\\jFSTMerge\\testfiles\\pythonexemple\\calculadora-right.py");
-		merger.mergeFiles(left, base, right, null);
+		*/
+		//merger.mergeFiles(left, base, right, null);
+		merger.mergeRevisions("C:\\Users\\Allan\\Documents\\mestrado\\2017-1\\TAES3\\repo\\scenarios\\scenario3\\scenario.revisions");
 		System.exit(conflictState);
 	}
 
