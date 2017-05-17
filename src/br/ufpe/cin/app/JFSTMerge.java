@@ -216,7 +216,11 @@ public class JFSTMerge {
 		File right = new File("D:\\dev\\repositorio\\ufpe\\jFSTMerge\\testfiles\\pythonexemple\\calculadora-right.py");
 		*/
 		//merger.mergeFiles(left, base, right, null);
-		merger.mergeRevisions("C:\\Users\\Allan\\Documents\\mestrado\\2017-1\\TAES3\\repo\\scenarios\\scenario8\\scenario.revisions");
+		//merger.mergeRevisions("/home/allan/s3mpython/projects/scrapy/revisions/aux/rev_0ab7c1f-b76b374.revisions");
+		
+		S3mBatch benchmark = new S3mBatch("/home/allan/s3mpython/projects/scrapy/revisions");
+		benchmark.runS3m();
+		
 		System.out.println("Conflict state: " + conflictState);
 		System.exit(conflictState);
 	}
