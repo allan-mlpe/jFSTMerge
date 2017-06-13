@@ -187,7 +187,9 @@ public final class FilesManager {
 		if(fList != null){
 			for (File file : fList){
 				if (file.isFile()){
-					allFiles.add(file.getAbsolutePath());
+					if(file.getName().toLowerCase().contains(".py")) {
+						allFiles.add(file.getAbsolutePath());
+					}
 				} 
 			}
 		}
